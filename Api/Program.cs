@@ -1,9 +1,11 @@
 using Api.Interfaces;
+using Api.Providers;
 using Api.Repositories;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<IEmployeeServiceProvider, EmployeeServiceProvider>();
 builder.Services.AddScoped<IEmployeeRepository, TestRepository>();
 builder.Services.AddAutoMapper(typeof(Program));
 

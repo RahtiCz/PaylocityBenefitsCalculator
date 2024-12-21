@@ -1,7 +1,9 @@
 ﻿using Api.Dtos.Dependent;
 using Api.Dtos.Employee;
+using Api.Dtos.Paycheck;
 using Api.Interfaces;
 using Api.Models;
+using Api.Providers;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -14,11 +16,13 @@ public class EmployeesController : ControllerBase
 {
     private readonly IEmployeeRepository _repository;
     private readonly IMapper _mapper;
+    private readonly IEmployeeServiceProvider _employeeServiceProvider;
 
-    public EmployeesController(IEmployeeRepository repository, IMapper mapper)
+    public EmployeesController(IEmployeeRepository repository, IMapper mapper, IEmployeeServiceProvider employeeServiceProvider)
     {
         _repository = repository;
         _mapper = mapper;
+        _employeeServiceProvider = employeeServiceProvider;
     }
 
     [SwaggerOperation(Summary = "Get employee by id")]
@@ -42,5 +46,20 @@ public class EmployeesController : ControllerBase
         var employees = await _repository.GetAllEmployeesAsync();
         var employeeDtos = _mapper.Map<List<GetEmployeeDto>>(employees);
         return new ApiResponse<List<GetEmployeeDto>> { Data = employeeDtos, Success = true };
+    }
+
+    [SwaggerOperation(Summary = "Calculate paycheck for employee by id")]
+    [HttpGet("{id}/paycheck")]
+    public async Task<ActionResult<ApiResponse<GetPaycheckDto>>> CalculatePaycheck(int id)
+    {
+        var employee = await _repository.GetEmployeeByIdAsync(id);
+        if (employee == null)
+        {
+            return NotFound(new ApiResponse<decimal> { Success = false, Error = "Employee not found" });
+        }
+
+        var paycheck = _employeeServiceProvider.CalculatePaycheck(employee);
+        var paycheckDto = _mapper.Map<GetPaycheckDto>(paycheck);
+        return new ApiResponse<GetPaycheckDto> { Data = paycheckDto, Success = true };
     }
 }
