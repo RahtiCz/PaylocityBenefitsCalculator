@@ -1,8 +1,8 @@
 ﻿using Api.Dtos.Employee;
 using Api.Dtos.Paycheck;
-using Api.Interfaces;
 using Api.Models;
 using Api.Providers;
+using Api.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;

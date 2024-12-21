@@ -1,5 +1,4 @@
-﻿using Api.Interfaces;
-using Api.Models;
+﻿using Api.Models;
 using System.Collections.Concurrent;
 
 namespace Api.Repositories

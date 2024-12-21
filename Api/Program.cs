@@ -1,4 +1,3 @@
-using Api.Interfaces;
 using Api.Providers;
 using Api.Repositories;
 using Microsoft.OpenApi.Models;
