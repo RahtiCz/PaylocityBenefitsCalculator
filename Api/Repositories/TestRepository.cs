@@ -23,6 +23,12 @@ namespace Api.Repositories
             return Task.FromResult<IEnumerable<Employee>>(_employees.Values);
         }
 
+        public Task<Employee?> GetEmployeeByIdAsync(int id)
+        {
+            _employees.TryGetValue(id, out var employee);
+            return Task.FromResult(employee);
+        }
+
         private static List<Employee> GetInitialEmployees()
         {
             return new List<Employee>
