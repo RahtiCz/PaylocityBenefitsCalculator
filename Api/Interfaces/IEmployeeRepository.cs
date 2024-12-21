@@ -6,5 +6,8 @@ namespace Api.Interfaces
     {
         Task<IEnumerable<Employee>> GetAllEmployeesAsync();
         Task<Employee?> GetEmployeeByIdAsync(int id);
+
+        Task<IEnumerable<Dependent>> GetAllDependentsAsync();
+        Task<Dependent?> GetDependentByIdAsync(int id);
     }
 }

@@ -29,6 +29,18 @@ namespace Api.Repositories
             return Task.FromResult(employee);
         }
 
+        public Task<IEnumerable<Dependent>> GetAllDependentsAsync()
+        {
+            var dependents = _employees.Values.SelectMany(e => e.Dependents).ToList();
+            return Task.FromResult<IEnumerable<Dependent>>(dependents);
+        }
+
+        public Task<Dependent?> GetDependentByIdAsync(int id)
+        {
+            var dependent = _employees.Values.SelectMany(e => e.Dependents).FirstOrDefault(d => d.Id == id);
+            return Task.FromResult(dependent);
+        }
+
         private static List<Employee> GetInitialEmployees()
         {
             return new List<Employee>
