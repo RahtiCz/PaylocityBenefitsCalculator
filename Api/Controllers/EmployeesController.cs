@@ -58,6 +58,12 @@ public class EmployeesController : ControllerBase
             return NotFound(new ApiResponse<decimal> { Success = false, Error = "Employee not found" });
         }
 
+        //This should be in create/update employee endpoint. But just for demostration of the validation. I should not return 400, but just for simplicity.
+        if (!_employeeServiceProvider.ValidateDependents(employee.Dependents, out var errorMessage))
+        {
+            return BadRequest(new ApiResponse<GetPaycheckDto> { Success = false, Error = errorMessage });
+        }
+
         var paycheck = _employeeServiceProvider.CalculatePaycheck(employee);
         var paycheckDto = _mapper.Map<GetPaycheckDto>(paycheck);
         return new ApiResponse<GetPaycheckDto> { Data = paycheckDto, Success = true };

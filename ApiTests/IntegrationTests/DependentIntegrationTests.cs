@@ -47,6 +47,22 @@ public class DependentIntegrationTests : IntegrationTest
                 LastName = "Jordan",
                 Relationship = Relationship.DomesticPartner,
                 DateOfBirth = new DateTime(1974, 1, 2)
+            },
+            new()
+            {
+                Id = 5,
+                FirstName = "DP",
+                LastName = "Rich",
+                Relationship = Relationship.Spouse,
+                DateOfBirth = new DateTime(1974, 1,1)
+            },
+            new()
+            {
+                Id = 6,
+                FirstName = "DP",
+                LastName = "Poor",
+                Relationship = Relationship.DomesticPartner,
+                DateOfBirth = new DateTime(1990, 1, 1)
             }
         };
         await response.ShouldReturn(HttpStatusCode.OK, dependents);

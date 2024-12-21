@@ -99,6 +99,30 @@ namespace Api.Repositories
                             DateOfBirth = new DateTime(1974, 1, 2)
                         }
                     }
+                },
+                new() {
+                    Id = 4,
+                    FirstName = "Petr",
+                    LastName = "Rich",
+                    Salary = 91000m,
+                    DateOfBirth = new DateTime(1970, 1, 1),
+                    Dependents = new List<Dependent>
+                    {
+                        new() {
+                            Id = 5,
+                            FirstName = "DP",
+                            LastName = "Rich",
+                            Relationship = Relationship.Spouse,
+                            DateOfBirth = new DateTime(1974, 1,1)
+                        },
+                        new() {
+                            Id = 6,
+                            FirstName = "DP",
+                            LastName = "Poor",
+                            Relationship = Relationship.DomesticPartner,
+                            DateOfBirth = new DateTime(1990, 1, 1)
+                        }
+                    }
                 }
             };
         }

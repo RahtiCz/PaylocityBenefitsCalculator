@@ -10,6 +10,24 @@ namespace Api.Providers
         private const decimal DependentOver50AdditionalCost = 200;
         private const int PaychecksPerYear = 26;
 
+        public bool ValidateDependents(ICollection<Dependent> dependents, out string errorMessage)
+        {
+            if (dependents == null || !dependents.Any())
+            {
+                errorMessage = string.Empty;
+                return true;
+            }
+
+            if (dependents.Count(d => d.Relationship == Relationship.Spouse || d.Relationship == Relationship.DomesticPartner) > 1)
+            {
+                errorMessage = "An employee can have only one spouse or domestic partner.";
+                return false;
+            }
+
+            errorMessage = string.Empty;
+            return true;
+        }
+
         public Paycheck CalculatePaycheck(Employee employee)
         {
             var paycheckEarnings = employee.Salary / PaychecksPerYear;

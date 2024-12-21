@@ -78,6 +78,33 @@ public class EmployeeIntegrationTests : IntegrationTest
                         DateOfBirth = new DateTime(1974, 1, 2)
                     }
                 }
+            },
+            new() 
+            {
+                Id = 4,
+                FirstName = "Petr",
+                LastName = "Rich",
+                Salary = 91000m,
+                DateOfBirth = new DateTime(1970, 1, 1),
+                Dependents = new List<GetDependentDto>
+                {
+                    new() 
+                    {
+                        Id = 5,
+                        FirstName = "DP",
+                        LastName = "Rich",
+                        Relationship = Relationship.Spouse,
+                        DateOfBirth = new DateTime(1974, 1,1)
+                    },
+                    new() 
+                    {
+                        Id = 6,
+                        FirstName = "DP",
+                        LastName = "Poor",
+                        Relationship = Relationship.DomesticPartner,
+                        DateOfBirth = new DateTime(1990, 1, 1)
+                    }
+                }
             }
         };
         await response.ShouldReturn(HttpStatusCode.OK, employees);
@@ -103,6 +130,13 @@ public class EmployeeIntegrationTests : IntegrationTest
     {
         var response = await HttpClient.GetAsync($"/api/v1/employees/{int.MinValue}");
         await response.ShouldReturn(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task WhenAskedForEmployeePayment_WrongEmployeeRecordShouldReturn400()
+    {
+        var response = await HttpClient.GetAsync("/api/v1/employees/4/paycheck");
+        await response.ShouldReturn(HttpStatusCode.BadRequest);
     }
 }
 
