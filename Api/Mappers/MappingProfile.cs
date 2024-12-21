@@ -11,6 +11,5 @@ public class MappingProfile : Profile
         CreateMap<Employee, GetEmployeeDto>();
         CreateMap<Dependent, GetDependentDto>();
         CreateMap<Paycheck, GetPaycheckDto>();
-
     }
 }
